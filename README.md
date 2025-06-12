@@ -46,3 +46,16 @@ A powerful and elegant VS Code extension that **visualizes your Next.js routes**
 
 You can install from the [Visual Studio Marketplace](https://marketplace.visualstudio.com/) once published or manually:
 
+## 👐 Open Source
+
+This project is open source and licensed under the [MIT License](LICENSE).  
+You're welcome to explore, contribute, report issues, or fork it for your own needs.
+
+### 🤝 Contributing
+
+Contributions are welcome! Feel free to:
+- Open issues for bugs or feature requests
+- Submit pull requests
+- Share feedback or ideas
+
+Please see the [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
