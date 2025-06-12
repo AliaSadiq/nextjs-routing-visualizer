@@ -93,14 +93,6 @@
     "test": "vscode-test"
   },
   
-"files": [
-  "out",
-  "resources",
-  "extension/dist",
-  "src",
-  "README.md",
-  "package.json"
-],
 "icon": "icon.png",
 
   "devDependencies": {
