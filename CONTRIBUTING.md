@@ -12,7 +12,7 @@ We welcome pull requests, bug reports, ideas, and questions to make this extensi
 Click "Fork" on the top right of the [GitHub repository](https://github.com/your-username/nextjs-routing-visualizer) and clone your fork locally:
 
 ```bash
-git clone https://github.com/your-username/nextjs-routing-visualizer.git
+git clone https://github.com/AliaSadiq/nextjs-routing-visualizer.git
 cd nextjs-routing-visualizer
 ```
 
