@@ -92,10 +92,13 @@
     "lint": "eslint src",
     "test": "vscode-test"
   },
-  "files": [
+  
+"files": [
   "out",
   "resources",
-  "src"
+  "src",
+  "README.md",
+  "package.json"
 ],
 "icon": "icon.png",
 
