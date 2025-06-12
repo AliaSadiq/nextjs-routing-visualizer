@@ -96,6 +96,7 @@
 "files": [
   "out",
   "resources",
+  "extension/dist",
   "src",
   "README.md",
   "package.json"
