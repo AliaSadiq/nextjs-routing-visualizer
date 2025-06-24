@@ -44,7 +44,7 @@ A powerful and elegant VS Code extension that **visualizes your Next.js routes**
 
 ## 📦 Installation
 
-You can install from the [Visual Studio Marketplace](https://marketplace.visualstudio.com/)
+You can install from the [Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=AliaSadiq.nextjs-routing-visualizer&ssr=false#overview)
 
 ## 👐 Open Source
 
