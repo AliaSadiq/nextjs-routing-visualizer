@@ -5,19 +5,20 @@ export class RouteItem extends vscode.TreeItem {
   constructor(
     public readonly label: string | vscode.TreeItemLabel,
     public readonly collapsibleState: vscode.TreeItemCollapsibleState,
-    public readonly fullPath: string,
-    iconPath?: vscode.ThemeIcon | vscode.Uri | { light: vscode.Uri; dark: vscode.Uri }
+    private readonly fullPath: string,
+    iconPath?: vscode.ThemeIcon | vscode.Uri | { light: vscode.Uri; dark: vscode.Uri },
+    routePath?: string
   ) {
     super(label, collapsibleState);
-    this.tooltip = fullPath;
-    this.description = fullPath;
+
+    this.tooltip = routePath ?? '';
     this.contextValue = 'routeItem';
-    this.resourceUri = vscode.Uri.file(fullPath);
+
 
     this.command = {
       command: 'vscode.open',
       title: 'Open Route File',
-      arguments: [this.resourceUri]
+      arguments: [vscode.Uri.file(this.fullPath)]
     };
 
     if (iconPath) {
@@ -79,7 +80,6 @@ export class RouteProvider implements vscode.TreeDataProvider<RouteItem> {
       return [];
     }
 
-    const basePath = element ? element.fullPath : this.workspaceRoot;
 
     const patterns = [
       'pages/**/*.{js,ts,jsx,tsx}',
@@ -100,12 +100,20 @@ export class RouteProvider implements vscode.TreeDataProvider<RouteItem> {
 
     for (const file of files) {
       const relative = path.relative(this.workspaceRoot, file.fsPath);
-      const routePath = relative
+      const stripped = relative
+        .replace(/^src[\\/](app|pages)[\\/]/, '')
+        .replace(/^(app|pages)[\\/]/, '');
+
+      const routePath = stripped
         .replace(/\.(jsx?|tsx?)$/, '')
         .replace(/[\\/]+index$/, '')
         .replace(/\[\.\.\.(.*?)\]/g, ':$1*')
-        .replace(/\[(.*?)\]/g, ':$1')
-        .replace(/\((.*?)\)[\\/]/g, '');
+        .replace(/\[\[(.*?)\]\]/g, ':$1?')
+        .replace(/\[(.*?)\]/g, ':$1');
+
+
+
+      const cleanRoute = '/' + routePath.replace(/\\/g, '/');
 
       if (seenRoutes.has(routePath)) continue;
       seenRoutes.add(routePath);
@@ -113,8 +121,8 @@ export class RouteProvider implements vscode.TreeDataProvider<RouteItem> {
       if (this.filter && !routePath.toLowerCase().includes(this.filter)) continue;
 
       const label: vscode.TreeItemLabel = {
-        label: routePath,
-        highlights: []
+        label: cleanRoute,
+        highlights: getHighlights(cleanRoute, ':')
       };
 
       const isAppRoute = relative.startsWith('app' + path.sep);
@@ -140,7 +148,7 @@ export class RouteProvider implements vscode.TreeDataProvider<RouteItem> {
         )
       };
 
-      const item = new RouteItem(label, vscode.TreeItemCollapsibleState.None, file.fsPath, iconPath);
+      const item = new RouteItem(label, vscode.TreeItemCollapsibleState.None, file.fsPath, iconPath, cleanRoute);
       routeItems.push(item);
     }
 
