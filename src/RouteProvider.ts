@@ -42,7 +42,7 @@ export class RouteProvider implements vscode.TreeDataProvider<RouteItem> {
     if (workspaceRoot) {
       const pattern = new vscode.RelativePattern(
         workspaceRoot,
-        '{pages,app}/**/*.{js,ts,jsx,tsx}'
+        '/**/*.{js,ts,jsx,tsx}'
       );
       this.watcher = vscode.workspace.createFileSystemWatcher(pattern);
 
@@ -74,7 +74,7 @@ export class RouteProvider implements vscode.TreeDataProvider<RouteItem> {
     const basePath = element ? element.fullPath : this.workspaceRoot;
 
     const files = await vscode.workspace.findFiles(
-      new vscode.RelativePattern(basePath, '{pages,app}/**/*.{js,ts,jsx,tsx}'),
+      new vscode.RelativePattern(basePath, '/**/*.{js,ts,jsx,tsx}'),
       '**/node_modules/**'
     );
 
