@@ -40,15 +40,23 @@ export class RouteProvider implements vscode.TreeDataProvider<RouteItem> {
     private context: vscode.ExtensionContext
   ) {
     if (workspaceRoot) {
-      const pattern = new vscode.RelativePattern(
-        workspaceRoot,
-        '/**/*.{js,ts,jsx,tsx}'
-      );
-      this.watcher = vscode.workspace.createFileSystemWatcher(pattern);
 
-      this.watcher.onDidCreate(() => this.refresh());
-      this.watcher.onDidDelete(() => this.refresh());
-      this.watcher.onDidChange(() => this.refresh());
+      const patterns = [
+        'pages/**/*.{js,ts,jsx,tsx}',
+        'app/**/*.{js,ts,jsx,tsx}',
+        'src/pages/**/*.{js,ts,jsx,tsx}',
+        'src/app/**/*.{js,ts,jsx,tsx}'
+      ];
+
+      patterns.forEach((glob) => {
+        this.watcher = vscode.workspace.createFileSystemWatcher(glob);
+        this.watcher.onDidCreate(() => this.refresh());
+        this.watcher.onDidDelete(() => this.refresh());
+        this.watcher.onDidChange(() => this.refresh());
+      });
+
+
+
     }
   }
 
@@ -73,10 +81,19 @@ export class RouteProvider implements vscode.TreeDataProvider<RouteItem> {
 
     const basePath = element ? element.fullPath : this.workspaceRoot;
 
-    const files = await vscode.workspace.findFiles(
-      new vscode.RelativePattern(basePath, '/**/*.{js,ts,jsx,tsx}'),
-      '**/node_modules/**'
-    );
+    const patterns = [
+      'pages/**/*.{js,ts,jsx,tsx}',
+      'app/**/*.{js,ts,jsx,tsx}',
+      'src/pages/**/*.{js,ts,jsx,tsx}',
+      'src/app/**/*.{js,ts,jsx,tsx}'
+    ];
+
+    let files: vscode.Uri[] = [];
+    for (const glob of patterns) {
+      const found = await vscode.workspace.findFiles(glob, '**/node_modules/**');
+      files.push(...found);
+    }
+
 
     const routeItems: RouteItem[] = [];
     const seenRoutes = new Set<string>();
