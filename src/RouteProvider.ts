@@ -104,7 +104,8 @@ export class RouteProvider implements vscode.TreeDataProvider<RouteItem> {
         .replace(/\.(jsx?|tsx?)$/, '')
         .replace(/[\\/]+index$/, '')
         .replace(/\[\.\.\.(.*?)\]/g, ':$1*')
-        .replace(/\[(.*?)\]/g, ':$1');
+        .replace(/\[(.*?)\]/g, ':$1')
+        .replace(/\((.*?)\)[\\/]/g, '');
 
       if (seenRoutes.has(routePath)) continue;
       seenRoutes.add(routePath);
