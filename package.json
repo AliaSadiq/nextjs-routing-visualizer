@@ -3,7 +3,7 @@
   "displayName": "Next.js Routing Visualizer",
   "publisher": "AliaSadiq",
   "description": "📍 Visualize Next.js routing structure and simulate navigation.",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "repository": {
     "type": "git",
     "url": "https://github.com/AliaSadiq/nextjs-routing-visualizer"
